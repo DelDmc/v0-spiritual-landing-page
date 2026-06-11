@@ -1,19 +1,20 @@
 const stats = [
   {
-    value: "46+",
+    value: "~46",
     label: "Years of Teaching",
-    description: "Preaching and guiding people since 1980.",
+    description: "Long-term preaching, teaching, and practical guidance.",
   },
   {
-    value: "800+",
+    value: "~800",
     label: "People Mentored",
     description:
       "Spiritual students and people receiving guidance across several countries.",
   },
   {
-    value: "100+",
+    value: "~100",
     label: "Classes Per Year",
-    description: "Regular classes, personal guidance, and small-group teachings.",
+    description:
+      "Based on regular weekly classes, personal guidance, and small groups.",
   },
   {
     value: "30+",
@@ -30,6 +31,9 @@ export function ImpactSection() {
           <h2 className="font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl">
             Proven Impact Over Decades
           </h2>
+          <p className="mt-5 text-sm text-primary-foreground/70">
+            Approximate figures, to be refined as the team confirms records.
+          </p>
         </div>
 
         <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">

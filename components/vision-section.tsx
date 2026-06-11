@@ -22,7 +22,7 @@ const features = [
 
 export function VisionSection() {
   return (
-    <section className="bg-secondary/50 py-20 lg:py-32">
+    <section id="vision" className="bg-secondary/50 py-20 lg:py-32">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 lg:items-center">
           {/* Content */}
@@ -60,25 +60,44 @@ export function VisionSection() {
           </div>
         </div>
 
-        {/* Vision Image Placeholder */}
         <div className="mx-auto mt-16 max-w-4xl">
-          <div className="relative aspect-video overflow-hidden rounded-2xl bg-gradient-to-br from-primary/10 via-muted to-accent/10">
-            <div className="absolute inset-0 flex flex-col items-center justify-center p-8 text-center">
-              <div className="mb-4 grid grid-cols-3 gap-2">
-                {[Palmtree, Home, Sprout].map((Icon, i) => (
-                  <div
-                    key={i}
-                    className="flex h-16 w-16 items-center justify-center rounded-full bg-card shadow-sm"
-                  >
-                    <Icon className="h-8 w-8 text-primary/60" />
+          <div className="overflow-hidden rounded-xl border border-border bg-card">
+            <div className="grid gap-px bg-border sm:grid-cols-3">
+              {[
+                {
+                  icon: Palmtree,
+                  title: "Culture",
+                  copy: "Balinese heritage, hospitality, and respectful tourism.",
+                },
+                {
+                  icon: Home,
+                  title: "Community",
+                  copy: "Family-centered living with education and service.",
+                },
+                {
+                  icon: Sprout,
+                  title: "Sustainability",
+                  copy: "Agriculture, local production, and simple living.",
+                },
+              ].map((item) => (
+                <div key={item.title} className="bg-card p-6 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-primary/10 text-primary">
+                    <item.icon className="h-7 w-7" />
                   </div>
-                ))}
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Vision rendering placeholder
-              </p>
-              <p className="mt-2 text-xs text-muted-foreground/70">
-                Peaceful Balinese spiritual community concept
+                  <h3 className="mt-4 font-serif text-xl font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {item.copy}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <div className="border-t border-border p-6 text-center">
+              <p className="mx-auto max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                This larger vision can be developed step by step: first through
+                educational programs and partnerships, then through land,
+                infrastructure, and community-based economic activity.
               </p>
             </div>
           </div>

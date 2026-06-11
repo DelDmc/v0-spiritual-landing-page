@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { MapPin } from "lucide-react"
+import { CalendarDays, MapPin, UsersRound } from "lucide-react"
 
 const countries = [
   { name: "Italy", flag: "🇮🇹" },
@@ -23,7 +23,6 @@ export function TourSection() {
           </p>
         </div>
 
-        {/* Country Badges */}
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           {countries.map((country) => (
             <div
@@ -38,13 +37,11 @@ export function TourSection() {
           ))}
         </div>
 
-        {/* Note */}
         <p className="mt-8 text-center text-sm text-muted-foreground">
           <MapPin className="mr-1 inline-block h-4 w-4" />
           Additional locations may be added depending on the final schedule.
         </p>
 
-        {/* CTA */}
         <div className="mt-12 text-center">
           <Link
             href="#support"
@@ -54,35 +51,50 @@ export function TourSection() {
           </Link>
         </div>
 
-        {/* Tour Visual Placeholder */}
         <div className="mx-auto mt-16 max-w-4xl">
-          <div className="relative aspect-[21/9] overflow-hidden rounded-2xl bg-gradient-to-r from-muted via-secondary to-muted">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <div className="mx-auto mb-4 flex items-center justify-center gap-2">
-                  {countries.slice(0, 3).map((c, i) => (
-                    <div
-                      key={c.name}
-                      className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-lg shadow-sm"
-                    >
-                      {c.flag}
-                    </div>
-                  ))}
-                  <span className="text-2xl text-muted-foreground">···</span>
-                  {countries.slice(-3).map((c, i) => (
-                    <div
-                      key={c.name}
-                      className="flex h-12 w-12 items-center justify-center rounded-full bg-card text-lg shadow-sm"
-                    >
-                      {c.flag}
-                    </div>
-                  ))}
-                </div>
-                <p className="text-sm text-muted-foreground">
-                  Tour map placeholder — dates and cities to be added
-                </p>
-              </div>
+          <div className="grid overflow-hidden rounded-xl border border-border bg-card md:grid-cols-3">
+            <div className="border-b border-border p-6 md:border-b-0 md:border-r">
+              <CalendarDays className="h-6 w-6 text-primary" />
+              <h3 className="mt-4 font-serif text-xl font-semibold text-foreground">
+                Schedule Planning
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Dates, cities, and host communities can be confirmed as sponsor
+                and organizer support becomes available.
+              </p>
             </div>
+            <div className="border-b border-border p-6 md:border-b-0 md:border-r">
+              <UsersRound className="h-6 w-6 text-primary" />
+              <h3 className="mt-4 font-serif text-xl font-semibold text-foreground">
+                Program Formats
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Public talks, family seminars, private guidance, kirtan, temple
+                meetings, home programs, and interfaith gatherings.
+              </p>
+            </div>
+            <div className="p-6">
+              <MapPin className="h-6 w-6 text-primary" />
+              <h3 className="mt-4 font-serif text-xl font-semibold text-foreground">
+                Host Opportunity
+              </h3>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                Businesses, communities, and organizers can help arrange venues,
+                accommodation, transport, and local outreach.
+              </p>
+            </div>
+          </div>
+          <div className="mt-6 flex flex-wrap justify-center gap-2">
+            {countries.map((country, index) => (
+              <div key={country.name} className="flex items-center gap-2">
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-card text-base shadow-sm">
+                  {country.flag}
+                </span>
+                {index < countries.length - 1 && (
+                  <span className="hidden h-px w-8 bg-border sm:block" />
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>

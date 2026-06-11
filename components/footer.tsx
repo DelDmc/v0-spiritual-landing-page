@@ -5,6 +5,7 @@ const footerLinks = [
   { label: "Mission", href: "#mission" },
   { label: "Method", href: "#method" },
   { label: "Impact", href: "#impact" },
+  { label: "Global Reach", href: "#global-impact" },
   { label: "European Tour", href: "#tour" },
   { label: "Sponsorship", href: "#sponsorship" },
   { label: "Testimonials", href: "#testimonials" },
