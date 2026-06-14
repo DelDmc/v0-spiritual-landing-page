@@ -184,9 +184,9 @@ function ArcLine({ from, to }: { from: GlobePoint; to: GlobePoint }) {
   const material = useMemo(
     () =>
       new LineBasicMaterial({
-        color: "#f0c86a",
+        color: "#bde7ff",
         transparent: true,
-        opacity: 0.34,
+        opacity: 0.4,
         blending: AdditiveBlending,
       }),
     [],
@@ -240,7 +240,7 @@ const GlobePointMarker = memo(function GlobePointMarker({
         <mesh>
           <torusGeometry args={[0.075, 0.006, 12, 48]} />
           <meshBasicMaterial
-            color="#ffe3a3"
+            color="#f4fbff"
             transparent
             opacity={0.92}
             blending={AdditiveBlending}
@@ -265,9 +265,9 @@ const GlobePointMarker = memo(function GlobePointMarker({
       >
         <sphereGeometry args={[0.052, 18, 18]} />
         <meshBasicMaterial
-          color="#f3c76a"
+          color="#d8f3ff"
           transparent
-          opacity={selected ? 0.5 : 0.28}
+          opacity={selected ? 0.56 : 0.32}
           blending={AdditiveBlending}
         />
       </mesh>
@@ -288,7 +288,7 @@ const GlobePointMarker = memo(function GlobePointMarker({
         }}
       >
         <sphereGeometry args={[selected ? 0.044 : 0.036, 24, 24]} />
-        <meshBasicMaterial color={selected ? "#ffe2a1" : "#d9a84f"} />
+        <meshBasicMaterial color={selected ? "#ffffff" : "#9edcff"} />
       </mesh>
     </group>
   )
@@ -408,12 +408,12 @@ function GlobeScene({
   return (
     <>
       <ambientLight intensity={1.45} />
-      <directionalLight position={[3, 3.4, 4]} intensity={2.75} color="#fff2b8" />
+      <directionalLight position={[3, 3.4, 4]} intensity={2.75} color="#f8fbff" />
       <pointLight
         position={[-2.8, 2.4, 2.7]}
         intensity={5.8}
         distance={8}
-        color="#ffd77a"
+        color="#f4f8ff"
       />
       <pointLight position={[0, 3.2, 3.8]} intensity={1.9} distance={7} color="#ffffff" />
 
@@ -442,7 +442,7 @@ function GlobeScene({
         <mesh>
           <sphereGeometry args={[radius * 1.065, 64, 64]} />
           <meshBasicMaterial
-            color="#ffe9a6"
+            color="#f7fbff"
             side={BackSide}
             transparent
             opacity={0.16}
@@ -453,7 +453,7 @@ function GlobeScene({
         <mesh>
           <sphereGeometry args={[radius * 1.04, 64, 64]} />
           <meshBasicMaterial
-            color="#fff4c2"
+            color="#ffffff"
             side={BackSide}
             transparent
             opacity={0.24}
@@ -576,8 +576,8 @@ export function InteractiveGlobe({
         setHoveredPoint(null)
       }}
     >
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,245,191,0.28)_0%,rgba(255,231,142,0.18)_48%,transparent_72%)] blur-xl" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[66%] w-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-50/90 shadow-[0_0_18px_4px_rgba(255,246,205,0.82),0_0_36px_10px_rgba(255,214,102,0.42)]" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.3)_0%,rgba(226,239,255,0.2)_48%,transparent_72%)] blur-xl" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[66%] w-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/90 shadow-[0_0_18px_4px_rgba(255,255,255,0.82),0_0_36px_10px_rgba(214,232,255,0.46)]" />
 
       {webgl === null ? (
         <div className="absolute inset-0 animate-pulse bg-primary-foreground/[0.06]" />

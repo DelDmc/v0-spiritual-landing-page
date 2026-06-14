@@ -154,7 +154,7 @@
 
 .cosmic-nebula {
   background-image:
-    radial-gradient(circle at 32% 38%, rgba(255, 231, 145, 0.34), rgba(116, 80, 242, 0.18) 20%, rgba(29, 46, 126, 0.12) 42%, transparent 64%),
+    radial-gradient(circle at 32% 38%, rgba(245, 250, 255, 0.34), rgba(116, 80, 242, 0.18) 20%, rgba(29, 46, 126, 0.12) 42%, transparent 64%),
     radial-gradient(circle at 78% 18%, rgba(65, 105, 232, 0.14), transparent 30%),
     radial-gradient(circle at 68% 78%, rgba(84, 44, 176, 0.16), transparent 34%),
     linear-gradient(145deg, rgba(4, 5, 18, 0.14), rgba(5, 6, 26, 0.86) 44%, rgb(0, 1, 7));
@@ -192,10 +192,23 @@
 
 .cosmic-local-stars {
   background-image:
-    radial-gradient(circle at 21% 29%, rgb(255, 255, 255) 0 1.8px, rgba(255, 239, 184, 0.72) 2px, transparent 7px),
-    radial-gradient(circle at 31% 43%, rgb(255, 250, 222) 0 1.7px, rgba(255, 220, 123, 0.7) 2px, transparent 8px),
+    radial-gradient(circle at 21% 29%, rgb(255, 255, 255) 0 1.8px, rgba(228, 240, 255, 0.72) 2px, transparent 7px),
+    radial-gradient(circle at 31% 43%, rgb(255, 255, 255) 0 1.7px, rgba(218, 234, 255, 0.7) 2px, transparent 8px),
     radial-gradient(circle at 44% 25%, rgb(232, 239, 255) 0 1.5px, rgba(155, 181, 255, 0.62) 2px, transparent 7px),
-    radial-gradient(circle at 52% 39%, rgba(255, 255, 255, 0.95) 0 1.5px, rgba(255, 235, 172, 0.58) 2px, transparent 7px),
-    radial-gradient(circle at 36% 61%, rgba(255, 250, 222, 0.95) 0 1.6px, rgba(255, 218, 110, 0.58) 2px, transparent 8px),
+    radial-gradient(circle at 52% 39%, rgba(255, 255, 255, 0.95) 0 1.5px, rgba(222, 236, 255, 0.58) 2px, transparent 7px),
+    radial-gradient(circle at 36% 61%, rgba(255, 255, 255, 0.95) 0 1.6px, rgba(218, 234, 255, 0.58) 2px, transparent 8px),
     radial-gradient(circle at 63% 52%, rgba(232, 239, 255, 0.92) 0 1.5px, rgba(160, 188, 255, 0.52) 2px, transparent 7px);
+}
+
+.aerospace-grid {
+  background-image:
+    linear-gradient(rgba(142, 174, 255, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142, 174, 255, 0.09) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  mask-image: linear-gradient(to bottom, transparent, black 16%, black 82%, transparent);
+}
+
+.aerospace-scanline {
+  background-image: linear-gradient(to bottom, transparent 0 48%, rgba(255, 255, 255, 0.14) 50%, transparent 52% 100%);
+  background-size: 100% 7px;
 }

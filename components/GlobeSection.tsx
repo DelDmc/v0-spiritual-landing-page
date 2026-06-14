@@ -51,8 +51,8 @@ const stats = [
 function GlobeLoadingSkeleton() {
   return (
     <div className="relative mx-auto h-[calc(100vw-2rem)] max-h-[22rem] w-[calc(100vw-2rem)] max-w-[22rem] overflow-visible sm:h-[29rem] sm:max-h-none sm:w-full sm:max-w-[29rem] lg:h-[31rem] lg:max-w-none">
-      <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-white/20 shadow-2xl shadow-amber-200/30" />
-      <div className="absolute inset-x-8 bottom-8 h-3 animate-pulse rounded-full bg-white/20" />
+      <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-white/16 shadow-[0_0_60px_rgba(220,235,255,0.36)]" />
+      <div className="absolute inset-x-10 bottom-8 h-px animate-pulse bg-white/35" />
     </div>
   )
 }
@@ -65,30 +65,30 @@ function PointCard({
   onClose: () => void
 }) {
   return (
-    <article className="rounded-lg border border-primary-foreground/15 bg-primary-foreground/[0.08] p-5 text-primary-foreground shadow-2xl shadow-black/10 backdrop-blur">
+    <article className="min-w-0 max-w-full overflow-hidden rounded-md border border-white/18 bg-[#050814]/82 p-4 text-primary-foreground shadow-2xl shadow-black/30 backdrop-blur sm:p-5">
       <div className="flex items-start justify-between gap-4">
-        <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-accent">
+        <div className="min-w-0">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-sky-200 sm:text-xs sm:tracking-[0.22em]">
             {categoryLabels[point.category]}
           </p>
-          <h3 className="mt-3 font-serif text-2xl font-semibold leading-tight">
+          <h3 className="mt-3 [overflow-wrap:anywhere] text-xl font-semibold leading-tight tracking-wide sm:text-2xl">
             {point.title}
           </h3>
         </div>
         <button
           type="button"
           onClick={onClose}
-          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-primary-foreground/15 text-primary-foreground/70 transition hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-white/20 text-primary-foreground/70 transition hover:border-sky-200 hover:text-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-200"
           aria-label="Close selected location"
         >
           <X className="h-4 w-4" />
         </button>
       </div>
 
-      <p className="mt-3 text-sm font-medium text-primary-foreground/75">
+      <p className="mt-3 [overflow-wrap:anywhere] text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-primary-foreground/62 sm:text-xs sm:tracking-[0.18em]">
         {point.city ? `${point.city}, ${point.country}` : point.country}
       </p>
-      <p className="mt-4 text-sm leading-relaxed text-primary-foreground/78">
+      <p className="mt-4 [overflow-wrap:anywhere] text-sm leading-relaxed text-primary-foreground/78">
         {point.description}
       </p>
     </article>
@@ -111,9 +111,9 @@ export function GlobeSection() {
   return (
     <section
       id="global-impact"
-      className="relative overflow-hidden bg-[#01020a] py-16 text-primary-foreground sm:py-24"
+      className="relative overflow-hidden bg-[#02030a] py-12 text-primary-foreground sm:py-24"
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-white/25" />
+      <div className="absolute inset-x-0 top-0 h-px bg-white/35" />
       <div className="cosmic-nebula absolute inset-0" />
       <div className="cosmic-vignette absolute inset-0" />
       <div className="cosmic-starfield-fine absolute inset-0 opacity-95" />
@@ -121,9 +121,13 @@ export function GlobeSection() {
       <div className="cosmic-starfield-bright absolute inset-0 opacity-80" />
       <div className="cosmic-starfield-glow absolute inset-0 opacity-75" />
       <div className="cosmic-local-stars absolute inset-0 opacity-90" />
-      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white/10 to-transparent" />
+      <div className="aerospace-grid absolute inset-0 opacity-80" />
+      <div className="aerospace-scanline absolute inset-0 opacity-[0.045]" />
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-white/8 to-transparent" />
+      <div className="absolute inset-x-8 top-6 hidden h-px bg-gradient-to-r from-transparent via-white/45 to-transparent lg:block" />
+      <div className="absolute bottom-6 left-8 hidden h-px w-52 bg-gradient-to-r from-white/45 to-transparent lg:block" />
 
-      <div className="relative mx-auto grid max-w-7xl min-w-0 items-start gap-7 px-4 sm:px-6 lg:min-h-[42rem] lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:items-center lg:gap-8 lg:px-8">
+      <div className="relative mx-auto grid max-w-7xl min-w-0 items-start gap-6 px-4 sm:gap-7 sm:px-6 lg:min-h-[42rem] lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:items-center lg:gap-8 lg:px-8">
         <div className="order-1 -mx-4 flex min-w-0 justify-center px-4 sm:mx-0 sm:px-0 lg:block">
           <InteractiveGlobe
             selectedId={activePoint?.id}
@@ -131,30 +135,30 @@ export function GlobeSection() {
           />
         </div>
 
-        <div className="order-2">
-          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-accent">
-            Global guidance network
+        <div className="order-2 min-w-0 max-w-full overflow-hidden">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-sky-200 sm:text-xs sm:tracking-[0.32em]">
+            Orbital guidance network
           </p>
-          <h1 className="mt-4 max-w-2xl font-serif text-4xl font-semibold leading-tight text-balance sm:text-5xl">
+          <h1 className="mt-4 max-w-2xl [overflow-wrap:anywhere] text-[1.85rem] font-semibold uppercase leading-[1.05] tracking-[0.01em] text-balance sm:text-5xl sm:tracking-wide">
             A Global Network of Guidance and Service
           </h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-primary-foreground/78 sm:text-lg">
+          <p className="mt-5 max-w-2xl [overflow-wrap:anywhere] border-l border-sky-200/35 pl-3 text-sm leading-relaxed text-primary-foreground/74 sm:pl-4 sm:text-lg">
             From Bali to Europe, Guru-ma and Guru Maharaj's work connects
             families, communities, and seekers through practical spiritual
             education.
           </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-2.5 sm:gap-3">
+          <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
             {stats.map((stat) => (
               <div
                 key={stat.label}
-                className="min-h-24 rounded-lg border border-primary-foreground/15 bg-primary-foreground/[0.07] p-3.5 sm:min-h-28 sm:p-4"
+                className="min-h-20 min-w-0 rounded-md border border-white/15 bg-[#050814]/72 p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur sm:min-h-28 sm:p-4"
               >
-                <stat.icon className="h-5 w-5 text-accent" />
-                <p className="mt-3 text-lg font-semibold leading-tight">
+                <stat.icon className="h-5 w-5 text-sky-200" />
+                <p className="mt-3 [overflow-wrap:anywhere] text-base font-semibold leading-tight tracking-wide sm:text-lg">
                   {stat.value}
                 </p>
-                <p className="mt-1 text-xs leading-snug text-primary-foreground/62">
+                <p className="mt-1 [overflow-wrap:anywhere] text-[0.68rem] uppercase leading-snug tracking-[0.1em] text-primary-foreground/52 sm:text-xs sm:tracking-[0.12em]">
                   {stat.label}
                 </p>
               </div>
@@ -165,7 +169,7 @@ export function GlobeSection() {
             {activePoint ? (
               <PointCard point={activePoint} onClose={() => setActivePoint(null)} />
             ) : (
-              <div className="rounded-lg border border-primary-foreground/15 bg-primary-foreground/[0.06] p-5">
+              <div className="rounded-md border border-white/15 bg-[#050814]/72 p-4 backdrop-blur sm:p-5">
                 <p className="text-sm leading-relaxed text-primary-foreground/72">
                   Select a glowing point on the globe to view a place-based note
                   about mentorship, preaching, community support, or European
@@ -179,7 +183,7 @@ export function GlobeSection() {
           </div>
 
           <div
-            className="-mx-4 mt-4 flex gap-2 overflow-x-auto px-4 pb-2 [scrollbar-width:none] sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 sm:pb-0 [&::-webkit-scrollbar]:hidden"
+            className="mt-4 grid min-w-0 grid-cols-2 gap-2 overflow-hidden sm:flex sm:flex-wrap"
             aria-label="Globe locations"
           >
             {globePoints.map((point) => (
@@ -188,7 +192,7 @@ export function GlobeSection() {
                 type="button"
                 onClick={() => setActivePoint(point)}
                 aria-pressed={activePoint?.id === point.id}
-                className="shrink-0 rounded-md border border-primary-foreground/15 px-3 py-2 text-xs font-medium text-primary-foreground/72 transition hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent aria-pressed:border-accent aria-pressed:bg-accent/15 aria-pressed:text-accent"
+                className="min-h-9 min-w-0 rounded-md border border-white/15 bg-black/20 px-2 py-2 text-[0.62rem] font-semibold uppercase leading-tight tracking-normal text-primary-foreground/66 transition hover:border-sky-200 hover:text-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-200 aria-pressed:border-sky-200 aria-pressed:bg-sky-200/12 aria-pressed:text-sky-100 sm:px-3 sm:text-xs sm:tracking-[0.08em]"
               >
                 {point.label}
               </button>
