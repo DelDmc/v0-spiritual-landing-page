@@ -1,9 +1,9 @@
 import { Navigation } from "@/components/navigation"
-import { HeroSection } from "@/components/hero-section"
 import { MissionSection } from "@/components/mission-section"
 import { ProblemSection } from "@/components/problem-section"
 import { MethodSection } from "@/components/method-section"
 import { ImpactSection } from "@/components/impact-section"
+import { GlobalImpactSection } from "@/components/global-impact-section"
 import { UniquenessSection } from "@/components/uniqueness-section"
 import { TourSection } from "@/components/tour-section"
 import { SponsorshipSection } from "@/components/sponsorship-section"
@@ -16,7 +16,7 @@ export default function Home() {
   return (
     <main>
       <Navigation />
-      <HeroSection />
+      <GlobalImpactSection />
       <MissionSection />
       <ProblemSection />
       <MethodSection />

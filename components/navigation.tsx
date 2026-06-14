@@ -5,12 +5,12 @@ import Link from "next/link"
 import { Menu, X } from "lucide-react"
 
 const navLinks = [
+  { href: "#global-impact", label: "Globe" },
   { href: "#mission", label: "Mission" },
   { href: "#method", label: "Method" },
   { href: "#impact", label: "Impact" },
   { href: "#tour", label: "European Tour" },
   { href: "#sponsorship", label: "Sponsorship" },
-  { href: "#testimonials", label: "Testimonials" },
 ]
 
 export function Navigation() {
@@ -28,12 +28,11 @@ export function Navigation() {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-sm"
-          : "bg-transparent"
+        scrolled ? "shadow-sm" : ""
       }`}
     >
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="border-b border-border/80 bg-background/95 backdrop-blur-md">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between lg:h-20">
           <Link
             href="/"
@@ -69,7 +68,7 @@ export function Navigation() {
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
-        </div>
+          </div>
 
         {/* Mobile Navigation */}
         {isOpen && (
@@ -95,6 +94,7 @@ export function Navigation() {
             </div>
           </div>
         )}
+        </div>
       </div>
     </nav>
   )

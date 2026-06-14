@@ -4,26 +4,26 @@ import { Heart, Calendar, FileText, Mail } from "lucide-react"
 const actions = [
   {
     icon: Heart,
-    label: "Become a Sponsor",
-    href: "#",
+    label: "Sponsor Inquiry",
+    href: "#contact",
     primary: true,
   },
   {
     icon: Calendar,
-    label: "Invite Guruma to a Program",
-    href: "#",
+    label: "Request a Meeting",
+    href: "#contact",
     primary: false,
   },
   {
     icon: FileText,
-    label: "Request Full Budget",
-    href: "#",
+    label: "Request Budget",
+    href: "#contact",
     primary: false,
   },
   {
     icon: Mail,
     label: "Contact the Team",
-    href: "#",
+    href: "#contact",
     primary: false,
   },
 ]
@@ -34,12 +34,6 @@ export function CTASection() {
       id="support"
       className="relative overflow-hidden bg-primary py-20 text-primary-foreground lg:py-32"
     >
-      {/* Background decoration */}
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-primary-foreground/5 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 h-96 w-96 rounded-full bg-primary-foreground/5 blur-3xl" />
-      </div>
-
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h2 className="font-serif text-3xl font-semibold sm:text-4xl lg:text-5xl text-balance">
@@ -51,7 +45,6 @@ export function CTASection() {
           </p>
         </div>
 
-        {/* CTA Buttons */}
         <div className="mt-12 flex flex-wrap justify-center gap-4">
           {actions.map((action) => (
             <Link
@@ -69,14 +62,35 @@ export function CTASection() {
           ))}
         </div>
 
-        {/* Contact info placeholder */}
-        <div className="mx-auto mt-16 max-w-md rounded-xl border border-primary-foreground/20 bg-primary-foreground/5 p-6 text-center">
-          <p className="text-sm text-primary-foreground/70">
-            Contact details placeholder
-          </p>
-          <p className="mt-2 text-sm text-primary-foreground/50">
-            Email, phone, and social links will be added here
-          </p>
+        <div
+          id="contact"
+          className="mx-auto mt-16 grid max-w-3xl gap-4 rounded-xl border border-primary-foreground/20 bg-primary-foreground/5 p-6 sm:grid-cols-3 lg:p-8"
+        >
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/60">
+              For sponsors
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-primary-foreground/85">
+              Request a budget, expense plan, or sponsorship conversation.
+            </p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/60">
+              For organizers
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-primary-foreground/85">
+              Invite Guruma and Guru Maharaj for a class, seminar, or meeting.
+            </p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary-foreground/60">
+              Contact
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-primary-foreground/85">
+              Confirmed email, phone, and social links can be added before
+              publication.
+            </p>
+          </div>
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ export function MissionSection() {
             Our Mission
           </h2>
           <p className="mt-6 text-base leading-relaxed text-muted-foreground lg:text-lg text-pretty">
-            {"Guruma's work focuses on helping people pacify the mind, strengthen family relationships, and develop clear spiritual intelligence. Her teaching addresses real-life problems: conflict between husband and wife, difficulties between parents and children, tensions inside communities, and confusion about how to live responsibly."}
+            {"Guruma and Guru Maharaj focus on helping people pacify the mind, strengthen family relationships, and develop clear spiritual intelligence. Their teaching addresses real-life problems: conflict between husband and wife, difficulties between parents and children, tensions inside communities, and confusion about how to live responsibly."}
           </p>
         </div>
 
