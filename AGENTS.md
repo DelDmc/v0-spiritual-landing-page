@@ -153,10 +153,14 @@ The globe is client-side only and loaded through a dynamic import in
   while the image loads.
 - WebGL support is checked client-side; browsers without WebGL get fallback UI.
 - Auto-rotation is slow and pauses on hover/drag/touch interaction.
-- User can drag/rotate the globe.
+- User drag should rotate the globe only around the north-south polar axis; do
+  not add free manual vertical tilt.
 - Points pulse gently.
 - Hover shows a small location label.
-- Click/tap selects a point and updates the information card.
+- Click/tap selects a point, applies predictable longitude yaw plus a modest
+  capped latitude pitch so that country can move toward the center without
+  rolling/tumbling the Earth, highlights it with an amber ring, and updates the
+  information card.
 - Reduced-motion users receive minimal animation.
 
 ### Globe Mobile Layout
@@ -165,10 +169,10 @@ Mobile presentation is intentionally simple:
 
 - Globe appears first.
 - Content, stats, selected-location card, and location controls appear below.
-- Globe height is responsive:
-  - phone: `22rem`
-  - tablet: `28rem`
-  - desktop: `31rem`
+- Globe viewport is centered and square on phone/tablet:
+  - phone max width: `23.5rem`
+  - tablet max width: `29rem`
+  - desktop height: `31rem`
 - Location buttons are a horizontal scroll row on mobile.
 - On desktop the layout is two columns: globe left, content/card right.
 
@@ -301,6 +305,5 @@ The production build successfully generated static pages for:
 - `/`
 - `/_not-found`
 
-The dev server was last started with Node 20 on `http://localhost:3002` because
-port `3000` was occupied.
-
+The dev server was last started with Node 20 and Webpack on
+`http://localhost:3003`.

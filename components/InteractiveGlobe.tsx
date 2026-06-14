@@ -17,8 +17,10 @@ import {
   Line as ThreeLine,
   LineBasicMaterial,
   Mesh,
+  Quaternion,
   SRGBColorSpace,
   Texture,
+  Vector3,
 } from "three"
 
 import { globeArcs, globePoints, type GlobePoint } from "@/data/globePoints"
@@ -40,6 +42,9 @@ type DragState = {
 }
 
 const radius = 1.58
+const polarAxis = new Vector3(0, 1, 0)
+const pitchAxis = new Vector3(1, 0, 0)
+const maxSelectionPitch = 0.42
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -212,6 +217,12 @@ const GlobePointMarker = memo(function GlobePointMarker({
     () => latLngToVector3(point.lat, point.lng, radius + 0.025),
     [point.lat, point.lng],
   )
+  const orientation = useMemo(() => {
+    return new Quaternion().setFromUnitVectors(
+      new Vector3(0, 0, 1),
+      position.clone().normalize(),
+    )
+  }, [position])
 
   useFrame(({ clock }) => {
     if (!pulse.current || reducedMotion) {
@@ -224,7 +235,18 @@ const GlobePointMarker = memo(function GlobePointMarker({
   })
 
   return (
-    <group position={position}>
+    <group position={position} quaternion={orientation}>
+      {selected ? (
+        <mesh>
+          <torusGeometry args={[0.075, 0.006, 12, 48]} />
+          <meshBasicMaterial
+            color="#ffe3a3"
+            transparent
+            opacity={0.92}
+            blending={AdditiveBlending}
+          />
+        </mesh>
+      ) : null}
       <mesh
         ref={pulse}
         onClick={(event: ThreeEvent<MouseEvent>) => {
@@ -292,16 +314,19 @@ function GlobeScene({
   drag: DragState
 }) {
   const group = useRef<Group>(null)
+  const targetRotation = useRef<Quaternion | null>(null)
   const earthTexture = useEarthTexture()
   const fallbackEarthTexture = useFallbackEarthTexture()
   const visibleEarthTexture = earthTexture ?? fallbackEarthTexture
+  const pointLookup = useMemo(() => {
+    return new Map(globePoints.map((point) => [point.id, point]))
+  }, [])
   const arcLookup = useMemo(() => {
-    const byId = new Map(globePoints.map((point) => [point.id, point]))
     return globeArcs.reduce<
       Array<{ id: string; fromPoint: GlobePoint; toPoint: GlobePoint }>
     >((arcs, arc) => {
-      const fromPoint = byId.get(arc.from)
-      const toPoint = byId.get(arc.to)
+      const fromPoint = pointLookup.get(arc.from)
+      const toPoint = pointLookup.get(arc.to)
 
       if (fromPoint && toPoint) {
         arcs.push({ id: arc.id, fromPoint, toPoint })
@@ -309,40 +334,90 @@ function GlobeScene({
 
       return arcs
     }, [])
-  }, [])
+  }, [pointLookup])
 
   useFrame((_, delta) => {
+    if (!group.current) {
+      return
+    }
+
+    if (targetRotation.current) {
+      if (reducedMotion) {
+        group.current.quaternion.copy(targetRotation.current)
+        targetRotation.current = null
+        return
+      }
+
+      group.current.quaternion.slerp(
+        targetRotation.current,
+        Math.min(1, delta * 2.85),
+      )
+
+      if (group.current.quaternion.angleTo(targetRotation.current) < 0.003) {
+        group.current.quaternion.copy(targetRotation.current)
+        targetRotation.current = null
+      }
+
+      return
+    }
+
     if (!group.current || reducedMotion || hovering || paused || drag.active) {
       return
     }
 
-    group.current.rotation.y += delta * 0.11
+    group.current.rotateY(delta * 0.11)
   })
+
+  useEffect(() => {
+    const selectedPoint = selectedId ? pointLookup.get(selectedId) : null
+
+    if (!selectedPoint) {
+      targetRotation.current = null
+      return
+    }
+
+    const selectedVector = latLngToVector3(
+      selectedPoint.lat,
+      selectedPoint.lng,
+      radius,
+    ).normalize()
+    const yaw = Math.atan2(-selectedVector.x, selectedVector.z)
+    const yawRotation = new Quaternion().setFromAxisAngle(polarAxis, yaw)
+    const afterYaw = selectedVector.clone().applyQuaternion(yawRotation)
+    const pitch = Math.max(
+      -maxSelectionPitch,
+      Math.min(maxSelectionPitch, Math.atan2(afterYaw.y, afterYaw.z)),
+    )
+
+    targetRotation.current = new Quaternion()
+      .setFromAxisAngle(pitchAxis, pitch)
+      .multiply(yawRotation)
+  }, [pointLookup, selectedId])
 
   useEffect(() => {
     if (!group.current || !drag.active) {
       return
     }
 
+    targetRotation.current = null
     group.current.rotation.y += drag.x * 0.004
-    group.current.rotation.x = Math.max(
-      -0.72,
-      Math.min(0.72, group.current.rotation.x + drag.y * 0.003),
-    )
+    group.current.rotation.x = 0
+    group.current.rotation.z = 0
   }, [drag])
 
   return (
     <>
-      <ambientLight intensity={1.25} />
-      <directionalLight position={[3, 3, 4]} intensity={2.2} color="#fff4d1" />
+      <ambientLight intensity={1.45} />
+      <directionalLight position={[3, 3.4, 4]} intensity={2.75} color="#fff2b8" />
       <pointLight
-        position={[-3, 1.8, 2.4]}
-        intensity={4.5}
+        position={[-2.8, 2.4, 2.7]}
+        intensity={5.8}
         distance={8}
-        color="#d9b46a"
+        color="#ffd77a"
       />
+      <pointLight position={[0, 3.2, 3.8]} intensity={1.9} distance={7} color="#ffffff" />
 
-      <group ref={group} rotation={[0.1, -0.78, 0]}>
+      <group ref={group} rotation={[0, -0.78, 0]}>
         <mesh
           onPointerOver={() => setHovering(true)}
           onPointerOut={() => setHovering(false)}
@@ -367,10 +442,21 @@ function GlobeScene({
         <mesh>
           <sphereGeometry args={[radius * 1.065, 64, 64]} />
           <meshBasicMaterial
-            color="#90c7d6"
+            color="#ffe9a6"
             side={BackSide}
             transparent
-            opacity={0.11}
+            opacity={0.16}
+            blending={AdditiveBlending}
+          />
+        </mesh>
+
+        <mesh>
+          <sphereGeometry args={[radius * 1.04, 64, 64]} />
+          <meshBasicMaterial
+            color="#fff4c2"
+            side={BackSide}
+            transparent
+            opacity={0.24}
             blending={AdditiveBlending}
           />
         </mesh>
@@ -460,7 +546,7 @@ export function InteractiveGlobe({
 
   return (
     <div
-      className="relative h-[22rem] w-full overflow-hidden rounded-lg border border-primary-foreground/15 bg-[radial-gradient(circle_at_50%_42%,rgba(235,199,112,0.12),rgba(255,255,255,0.04)_34%,rgba(0,0,0,0)_64%)] sm:h-[28rem] lg:h-[31rem]"
+      className="relative mx-auto h-[calc(100vw-2rem)] max-h-[22rem] w-[calc(100vw-2rem)] max-w-[22rem] touch-none overflow-visible sm:h-[29rem] sm:max-h-none sm:w-full sm:max-w-[29rem] lg:h-[31rem] lg:max-w-none"
       aria-label="Interactive globe showing Guru-ma and Guru Maharaj's international guidance network"
       role="application"
       onPointerDown={(event) => {
@@ -490,12 +576,16 @@ export function InteractiveGlobe({
         setHoveredPoint(null)
       }}
     >
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[86%] w-[86%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,245,191,0.28)_0%,rgba(255,231,142,0.18)_48%,transparent_72%)] blur-xl" />
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[66%] w-[66%] -translate-x-1/2 -translate-y-1/2 rounded-full border border-amber-50/90 shadow-[0_0_18px_4px_rgba(255,246,205,0.82),0_0_36px_10px_rgba(255,214,102,0.42)]" />
+
       {webgl === null ? (
         <div className="absolute inset-0 animate-pulse bg-primary-foreground/[0.06]" />
       ) : (
         <Canvas
+          className="!absolute !inset-0 !h-full !w-full"
           dpr={[1, 1.65]}
-          camera={{ position: [0, 0, 4.25], fov: 42, near: 0.1, far: 100 }}
+          camera={{ position: [0, 0, 5.15], fov: 40, near: 0.1, far: 100 }}
           gl={{ antialias: true, alpha: true, powerPreference: "high-performance" }}
         >
           <GlobeScene
