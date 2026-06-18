@@ -27,18 +27,18 @@ export function Navigation() {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed left-0 right-0 top-0 z-50 w-screen max-w-[100vw] overflow-x-clip transition-all duration-300 ${
         scrolled ? "shadow-sm" : ""
       }`}
     >
-      <div className="border-b border-border/80 bg-background/95 backdrop-blur-md">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between lg:h-20">
+      <div className="w-full max-w-full overflow-x-clip border-b border-white/10 bg-[#02030a]/95 text-primary-foreground backdrop-blur-md">
+        <div className="mx-auto w-full max-w-full px-3 sm:px-6 lg:max-w-7xl lg:px-8">
+        <div className="flex h-12 w-full min-w-0 max-w-full items-center justify-between gap-2 lg:h-14">
           <Link
             href="/"
-            className="font-serif text-lg font-semibold text-foreground lg:text-xl"
+            className="block min-w-0 max-w-[calc(100vw-4.75rem)] truncate text-[0.72rem] font-semibold uppercase leading-tight tracking-[0.18em] text-primary-foreground sm:text-xs lg:max-w-none lg:text-sm lg:tracking-[0.24em]"
           >
-            Guru Maharaj & Guruma
+            Global Family Mentorship Mission
           </Link>
 
           {/* Desktop Navigation */}
@@ -47,14 +47,14 @@ export function Navigation() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                className="text-sm font-medium text-primary-foreground/62 transition-colors hover:text-primary-foreground"
               >
                 {link.label}
               </Link>
             ))}
             <Link
               href="#support"
-              className="rounded-md bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              className="rounded-md border border-white/15 bg-white/8 px-5 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-white/14"
             >
               Support the Mission
             </Link>
@@ -63,7 +63,7 @@ export function Navigation() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="rounded-md p-2 text-foreground lg:hidden"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-primary-foreground lg:hidden"
             aria-label="Toggle menu"
           >
             {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -72,14 +72,14 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="border-t border-border bg-background pb-4 lg:hidden">
-            <div className="flex flex-col space-y-3 pt-4">
+          <div className="w-full overflow-hidden border-t border-white/10 bg-[#02030a] pb-4 lg:hidden">
+            <div className="flex min-w-0 flex-col space-y-3 pt-4">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="px-2 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+                  className="min-w-0 px-2 py-2 text-sm font-medium text-primary-foreground/68 transition-colors hover:text-primary-foreground"
                 >
                   {link.label}
                 </Link>
@@ -87,7 +87,7 @@ export function Navigation() {
               <Link
                 href="#support"
                 onClick={() => setIsOpen(false)}
-                className="mx-2 rounded-md bg-primary px-5 py-2.5 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                className="mx-2 max-w-full rounded-md border border-white/15 bg-white/8 px-4 py-2.5 text-center text-sm font-medium text-primary-foreground transition-colors hover:bg-white/14"
               >
                 Support the Mission
               </Link>

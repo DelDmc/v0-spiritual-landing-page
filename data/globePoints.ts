@@ -105,15 +105,26 @@ export const globePoints: GlobePoint[] = [
       "Switzerland is one of the countries connected with the European preaching tour and the international support network.",
   },
   {
-    id: "italy",
-    label: "Italy",
-    country: "Italy",
-    lat: 41.8719,
-    lng: 12.5674,
+    id: "south-africa",
+    label: "South Africa",
+    country: "South Africa",
+    lat: -30.5595,
+    lng: 22.9375,
+    category: "mentorship",
+    title: "International mentorship",
+    description:
+      "South Africa is part of the wider international network connected with their family mentorship and spiritual guidance.",
+  },
+  {
+    id: "norway",
+    label: "Norway",
+    country: "Norway",
+    lat: 60.472,
+    lng: 8.4689,
     category: "tour",
     title: "European tour destination",
     description:
-      "Italy is one of the planned countries in the European preaching tour.",
+      "Norway is one of the planned countries in the European preaching tour.",
   },
   {
     id: "germany",
@@ -125,6 +136,17 @@ export const globePoints: GlobePoint[] = [
     title: "European tour destination",
     description:
       "Germany is one of the planned countries in the European preaching tour.",
+  },
+  {
+    id: "italy",
+    label: "Italy",
+    country: "Italy",
+    lat: 41.8719,
+    lng: 12.5674,
+    category: "tour",
+    title: "European tour destination",
+    description:
+      "Italy is one of the planned countries in the European preaching tour.",
   },
   {
     id: "belgium",
@@ -148,21 +170,11 @@ export const globePoints: GlobePoint[] = [
     description:
       "The Netherlands is one of the planned countries in the European preaching tour.",
   },
-  {
-    id: "norway",
-    label: "Norway",
-    country: "Norway",
-    lat: 60.472,
-    lng: 8.4689,
-    category: "tour",
-    title: "European tour destination",
-    description:
-      "Norway is one of the planned countries in the European preaching tour.",
-  },
 ]
 
 export const globeArcs: GlobeArc[] = [
   { id: "bali-italy", from: "bali-indonesia", to: "italy" },
+  { id: "bali-south-africa", from: "bali-indonesia", to: "south-africa" },
   { id: "italy-switzerland", from: "italy", to: "switzerland" },
   { id: "switzerland-germany", from: "switzerland", to: "germany" },
   { id: "germany-belgium", from: "germany", to: "belgium" },
