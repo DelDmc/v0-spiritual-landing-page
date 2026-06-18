@@ -1,7 +1,7 @@
 "use client"
 
 import dynamic from "next/dynamic"
-import { BookOpen, Globe2, HeartHandshake, Users, X } from "lucide-react"
+import { X } from "lucide-react"
 import { useMemo, useState } from "react"
 
 import { globePoints, type GlobePoint } from "@/data/globePoints"
@@ -25,32 +25,9 @@ const categoryLabels: Record<GlobePoint["category"], string> = {
   community: "Community",
 }
 
-const stats = [
-  {
-    icon: Globe2,
-    value: "46+",
-    label: "years of preaching",
-  },
-  {
-    icon: HeartHandshake,
-    value: "around 800",
-    label: "people mentored",
-  },
-  {
-    icon: BookOpen,
-    value: "30+",
-    label: "seminars organized",
-  },
-  {
-    icon: Users,
-    value: "Asia, Europe, Australia",
-    label: "international reach",
-  },
-]
-
 function GlobeLoadingSkeleton() {
   return (
-    <div className="relative mx-auto h-[calc(100vw-2rem)] max-h-[22rem] w-[calc(100vw-2rem)] max-w-[22rem] overflow-visible sm:h-[29rem] sm:max-h-none sm:w-full sm:max-w-[29rem] lg:h-[31rem] lg:max-w-none">
+    <div className="relative mx-auto h-[74vw] max-h-[17rem] w-[74vw] max-w-[17rem] overflow-visible sm:h-[24rem] sm:max-h-none sm:w-full sm:max-w-[24rem] md:h-[29rem] md:max-w-[29rem] lg:h-[31rem] lg:max-w-none">
       <div className="absolute left-1/2 top-1/2 h-64 w-64 -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-white/16 shadow-[0_0_60px_rgba(220,235,255,0.36)]" />
       <div className="absolute inset-x-10 bottom-8 h-px animate-pulse bg-white/35" />
     </div>
@@ -96,9 +73,7 @@ function PointCard({
 }
 
 export function GlobeSection() {
-  const [activePoint, setActivePoint] = useState<GlobePoint | null>(
-    globePoints[0],
-  )
+  const [activePoint, setActivePoint] = useState<GlobePoint | null>(null)
   const tourCountries = useMemo(
     () =>
       globePoints
@@ -111,7 +86,7 @@ export function GlobeSection() {
   return (
     <section
       id="global-impact"
-      className="relative overflow-hidden bg-[#02030a] py-12 text-primary-foreground sm:py-24"
+      className="relative w-full max-w-[100vw] overflow-x-clip bg-[#02030a] pb-12 pt-20 text-primary-foreground sm:pb-24 sm:pt-24 lg:pt-24"
     >
       <div className="absolute inset-x-0 top-0 h-px bg-white/35" />
       <div className="cosmic-nebula absolute inset-0" />
@@ -127,79 +102,83 @@ export function GlobeSection() {
       <div className="absolute inset-x-8 top-6 hidden h-px bg-gradient-to-r from-transparent via-white/45 to-transparent lg:block" />
       <div className="absolute bottom-6 left-8 hidden h-px w-52 bg-gradient-to-r from-white/45 to-transparent lg:block" />
 
-      <div className="relative mx-auto grid max-w-7xl min-w-0 items-start gap-6 px-4 sm:gap-7 sm:px-6 lg:min-h-[42rem] lg:grid-cols-[minmax(0,1.08fr)_minmax(22rem,0.92fr)] lg:items-center lg:gap-8 lg:px-8">
-        <div className="order-1 -mx-4 flex min-w-0 justify-center px-4 sm:mx-0 sm:px-0 lg:block">
+      <div className="relative mx-auto w-full max-w-5xl px-3 text-center sm:px-6 lg:px-8">
+        <h1 className="mx-auto max-w-4xl [overflow-wrap:anywhere] text-[1.85rem] font-semibold uppercase leading-[1.03] tracking-[0.01em] text-balance sm:text-5xl sm:tracking-wide">
+          Building Strong Families Across Cultures and Generations
+        </h1>
+        <p className="mx-auto mt-5 max-w-2xl [overflow-wrap:anywhere] border-y border-sky-200/30 px-3 py-3 text-sm uppercase tracking-[0.08em] text-primary-foreground/78 sm:text-base">
+          Strong Societies begin with Strong Families
+        </p>
+        <p className="mt-4 text-xs font-semibold uppercase tracking-[0.2em] text-sky-200 sm:text-sm">
+          46 years of global family mentorship
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-primary-foreground/66 sm:text-base">
+          A Rare Husband-and-Wife Mentoring Partnership Since 1980
+        </p>
+      </div>
+
+      <div className="relative mx-auto mt-8 grid w-full max-w-[100vw] min-w-0 items-start gap-6 overflow-hidden px-3 sm:gap-7 sm:px-6 lg:min-h-[36rem] lg:max-w-7xl lg:grid-cols-[minmax(0,1.1fr)_minmax(20rem,0.9fr)] lg:items-center lg:gap-8 lg:overflow-visible lg:px-8">
+        <div className="order-1 flex min-w-0 max-w-full justify-center lg:block">
           <InteractiveGlobe
             selectedId={activePoint?.id}
             onSelect={setActivePoint}
           />
         </div>
 
-        <div className="order-2 min-w-0 max-w-full overflow-hidden">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.22em] text-sky-200 sm:text-xs sm:tracking-[0.32em]">
-            Orbital guidance network
-          </p>
-          <h1 className="mt-4 max-w-2xl [overflow-wrap:anywhere] text-[1.85rem] font-semibold uppercase leading-[1.05] tracking-[0.01em] text-balance sm:text-5xl sm:tracking-wide">
-            A Global Network of Guidance and Service
-          </h1>
-          <p className="mt-5 max-w-2xl [overflow-wrap:anywhere] border-l border-sky-200/35 pl-3 text-sm leading-relaxed text-primary-foreground/74 sm:pl-4 sm:text-lg">
-            From Bali to Europe, Guru-ma and Guru Maharaj's work connects
-            families, communities, and seekers through practical spiritual
-            education.
-          </p>
+        <div className="order-2 flex w-full min-w-0 max-w-full flex-col overflow-hidden text-center lg:text-left">
+          <div className="flex min-w-0 flex-col gap-4">
+            <div
+              className="order-1 grid min-w-0 grid-cols-2 gap-2 overflow-hidden lg:order-2 lg:flex lg:flex-wrap"
+              aria-label="Globe locations"
+            >
+              {globePoints.map((point) => (
+                <button
+                  key={point.id}
+                  type="button"
+                  onClick={() => setActivePoint(point)}
+                  aria-pressed={activePoint?.id === point.id}
+                  className="min-h-9 min-w-0 rounded-md border border-white/15 bg-black/20 px-2 py-2 text-[0.62rem] font-semibold uppercase leading-tight tracking-normal text-primary-foreground/66 transition hover:border-sky-200 hover:text-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-200 aria-pressed:border-sky-200 aria-pressed:bg-sky-200/12 aria-pressed:text-sky-100 sm:px-3 sm:text-xs sm:tracking-[0.08em]"
+                >
+                  {point.label}
+                </button>
+              ))}
+            </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-2.5 sm:grid-cols-2 sm:gap-3">
-            {stats.map((stat) => (
-              <div
-                key={stat.label}
-                className="min-h-20 min-w-0 rounded-md border border-white/15 bg-[#050814]/72 p-3.5 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] backdrop-blur sm:min-h-28 sm:p-4"
-              >
-                <stat.icon className="h-5 w-5 text-sky-200" />
-                <p className="mt-3 [overflow-wrap:anywhere] text-base font-semibold leading-tight tracking-wide sm:text-lg">
-                  {stat.value}
-                </p>
-                <p className="mt-1 [overflow-wrap:anywhere] text-[0.68rem] uppercase leading-snug tracking-[0.1em] text-primary-foreground/52 sm:text-xs sm:tracking-[0.12em]">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6">
-            {activePoint ? (
-              <PointCard point={activePoint} onClose={() => setActivePoint(null)} />
-            ) : (
-              <div className="rounded-md border border-white/15 bg-[#050814]/72 p-4 backdrop-blur sm:p-5">
-                <p className="text-sm leading-relaxed text-primary-foreground/72">
-                  Select a glowing point on the globe to view a place-based note
-                  about mentorship, preaching, community support, or European
-                  tour countries.
-                </p>
-                <p className="mt-4 text-xs leading-relaxed text-primary-foreground/55">
-                  European tour countries: {tourCountries}.
-                </p>
-              </div>
-            )}
-          </div>
-
-          <div
-            className="mt-4 grid min-w-0 grid-cols-2 gap-2 overflow-hidden sm:flex sm:flex-wrap"
-            aria-label="Globe locations"
-          >
-            {globePoints.map((point) => (
-              <button
-                key={point.id}
-                type="button"
-                onClick={() => setActivePoint(point)}
-                aria-pressed={activePoint?.id === point.id}
-                className="min-h-9 min-w-0 rounded-md border border-white/15 bg-black/20 px-2 py-2 text-[0.62rem] font-semibold uppercase leading-tight tracking-normal text-primary-foreground/66 transition hover:border-sky-200 hover:text-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-200 aria-pressed:border-sky-200 aria-pressed:bg-sky-200/12 aria-pressed:text-sky-100 sm:px-3 sm:text-xs sm:tracking-[0.08em]"
-              >
-                {point.label}
-              </button>
-            ))}
+            <div className="order-2 lg:order-1">
+              {activePoint ? (
+                <div className="hidden lg:block">
+                  <PointCard point={activePoint} onClose={() => setActivePoint(null)} />
+                </div>
+              ) : (
+                <div className="hidden rounded-md border border-white/15 bg-[#050814]/72 p-4 backdrop-blur sm:p-5 lg:block">
+                  <p className="text-sm leading-relaxed text-primary-foreground/72">
+                    Select a glowing point on the globe to view a place-based note
+                    about mentorship, preaching, community support, or European
+                    tour countries.
+                  </p>
+                  <p className="mt-4 text-xs leading-relaxed text-primary-foreground/55">
+                    European tour countries: {tourCountries}.
+                  </p>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
+
+      {activePoint ? (
+        <div className="fixed inset-0 z-[60] flex items-end bg-black/58 px-3 pb-4 backdrop-blur-[1px] lg:hidden">
+          <button
+            type="button"
+            className="absolute inset-0 cursor-default"
+            aria-label="Close selected location"
+            onClick={() => setActivePoint(null)}
+          />
+          <div className="relative w-full">
+            <PointCard point={activePoint} onClose={() => setActivePoint(null)} />
+          </div>
+        </div>
+      ) : null}
     </section>
   )
 }

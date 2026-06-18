@@ -45,6 +45,37 @@ const radius = 1.58
 const polarAxis = new Vector3(0, 1, 0)
 const pitchAxis = new Vector3(1, 0, 0)
 const maxSelectionPitch = 0.42
+const maxManualPitch = 0.82
+
+function createPointLabelTexture(label: string) {
+  const canvas = document.createElement("canvas")
+  canvas.width = 256
+  canvas.height = 72
+
+  const context = canvas.getContext("2d")
+  if (!context) {
+    return null
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height)
+  context.fillStyle = "rgba(2, 6, 18, 0.78)"
+  context.strokeStyle = "rgba(224, 242, 254, 0.82)"
+  context.lineWidth = 2
+  context.beginPath()
+  context.roundRect(8, 12, 240, 42, 10)
+  context.fill()
+  context.stroke()
+  context.font = "600 22px Arial, sans-serif"
+  context.fillStyle = "rgba(248, 251, 255, 0.96)"
+  context.textAlign = "center"
+  context.textBaseline = "middle"
+  context.fillText(label.toUpperCase(), 128, 34, 214)
+
+  const texture = new CanvasTexture(canvas)
+  texture.colorSpace = SRGBColorSpace
+  texture.needsUpdate = true
+  return texture
+}
 
 function useReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -223,6 +254,13 @@ const GlobePointMarker = memo(function GlobePointMarker({
       position.clone().normalize(),
     )
   }, [position])
+  const labelTexture = useMemo(
+    () => createPointLabelTexture(point.label),
+    [point.label],
+  )
+  const labelScale = useMemo(() => {
+    return Math.min(0.64, Math.max(0.32, point.label.length * 0.046))
+  }, [point.label])
 
   useFrame(({ clock }) => {
     if (!pulse.current || reducedMotion) {
@@ -290,6 +328,16 @@ const GlobePointMarker = memo(function GlobePointMarker({
         <sphereGeometry args={[selected ? 0.044 : 0.036, 24, 24]} />
         <meshBasicMaterial color={selected ? "#ffffff" : "#9edcff"} />
       </mesh>
+      {labelTexture ? (
+        <sprite position={[0, 0, 0.15]} scale={[labelScale, 0.1, 1]}>
+          <spriteMaterial
+            map={labelTexture}
+            transparent
+            opacity={selected ? 0.96 : 0.76}
+            depthTest
+          />
+        </sprite>
+      ) : null}
     </group>
   )
 })
@@ -361,11 +409,6 @@ function GlobeScene({
       return
     }
 
-    if (!group.current || reducedMotion || hovering || paused || drag.active) {
-      return
-    }
-
-    group.current.rotateY(delta * 0.11)
   })
 
   useEffect(() => {
@@ -401,7 +444,10 @@ function GlobeScene({
 
     targetRotation.current = null
     group.current.rotation.y += drag.x * 0.004
-    group.current.rotation.x = 0
+    group.current.rotation.x = Math.max(
+      -maxManualPitch,
+      Math.min(maxManualPitch, group.current.rotation.x + drag.y * 0.0035),
+    )
     group.current.rotation.z = 0
   }, [drag])
 
@@ -417,7 +463,7 @@ function GlobeScene({
       />
       <pointLight position={[0, 3.2, 3.8]} intensity={1.9} distance={7} color="#ffffff" />
 
-      <group ref={group} rotation={[0, -0.78, 0]}>
+      <group ref={group} rotation={[0.26, -2.79, 0]}>
         <mesh
           onPointerOver={() => setHovering(true)}
           onPointerOut={() => setHovering(false)}
@@ -546,7 +592,7 @@ export function InteractiveGlobe({
 
   return (
     <div
-      className="relative mx-auto h-[calc(100vw-2rem)] max-h-[22rem] w-[calc(100vw-2rem)] max-w-[22rem] touch-none overflow-visible sm:h-[29rem] sm:max-h-none sm:w-full sm:max-w-[29rem] lg:h-[31rem] lg:max-w-none"
+      className="relative mx-auto h-[74vw] max-h-[17rem] w-[74vw] max-w-[17rem] touch-none overflow-visible sm:h-[24rem] sm:max-h-none sm:w-full sm:max-w-[24rem] md:h-[29rem] md:max-w-[29rem] lg:h-[31rem] lg:max-w-none"
       aria-label="Interactive globe showing Guru-ma and Guru Maharaj's international guidance network"
       role="application"
       onPointerDown={(event) => {
